@@ -2,14 +2,35 @@ import pandas as pd
 
 data = pd.read_csv("lung_cancer_dataset.csv")
 
-data[["copd_diagnosis", "family_history", "lung_cancer"]] = data[["copd_diagnosis", "family_history", "lung_cancer"]].replace({"Yes":1, "No":0})
+data[["copd_diagnosis", "family_history", "lung_cancer"]] = data[["copd_diagnosis", "family_history",
+"lung_cancer"]].replace({"Yes":1, "No":0})
 
-avg_men = ((data["gender"] == "Male").sum() / 50000)*100
-avg_female = ((data["gender"] == "Female").sum() / 50000)*100
+# it inherits data Dataframe and has all the columns.
+cancer = data[data["lung_cancer"] == 1]
+nocancer = data[data["lung_cancer"] == 0]
+avg_male_cancer = (cancer["gender"] == "Male").mean()*100
+avg_female_cancer = (cancer["gender"] == "Female").mean()*100
+avg_male_nocancer = (nocancer["gender"] == "Male").mean()*100
+avg_female_nocancer = (nocancer["gender"] == "Female").mean()*100
 
-avg_age = (data["age"].mean())
+# family history
+familyHistoryCancer = (cancer['family_history'] == 1).mean()*100
+familyHistoryNocancer = (nocancer['family_history'] == 1).mean()*100
 
-print(data)
-print(avg_age)
-print(avg_men)
-print(avg_female)
+
+avg_age_cancer = cancer["age"].mean()
+avg_age_nocancer = nocancer["age"].mean()
+
+
+
+print(data.info())
+print(data.describe())
+print("\nAverage Age of Lung cancer positive patients: ", avg_age_cancer)
+print("Average Age of Lung cancer negative patients: ", avg_age_nocancer)
+print("Percentage of Males with Lung cancer: ", avg_male_cancer)
+print("Percentage of Females with Lung cancer: ", avg_female_cancer)
+print("Percentage of Males without Lung cancer: ", avg_male_nocancer)
+print("Percentage of Females without Lung cancer: ", avg_female_nocancer)
+print("Percentage of Lung cancer patients with Family History: ", familyHistoryCancer)
+print("Percentage of Non-cancer patients with Family History: ", familyHistoryNocancer)
+
