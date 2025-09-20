@@ -1,11 +1,11 @@
 import pandas as pd
 
-uncleaned = pd.read_csv("lung_cancer_dataset.csv")
+uncleaned = pd.read_csv("Data/lung_cancer_dataset.csv")
 uncleaned[["copd_diagnosis", "family_history", "lung_cancer"]] = uncleaned[["copd_diagnosis", "family_history",
 "lung_cancer"]].replace({"Yes":1, "No":0})
 
-uncleaned.to_csv("cleaned_lung_cancer.csv", index=False)
-data = pd.read_csv("cleaned_lung_cancer.csv")
+uncleaned.to_csv("Data/cleaned_lung_cancer.csv", index=False)
+data = pd.read_csv("Data/cleaned_lung_cancer.csv")
 
 # it inherits data Dataframe and has all the columns.
 cancer = data[data["lung_cancer"] == 1]
